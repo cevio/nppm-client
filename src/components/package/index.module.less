@@ -1,0 +1,40 @@
+.package{
+  border: 1px dashed #ddd;
+  padding: 12px;
+  border-radius: 4px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all .3s ease;
+  .name{
+    font-weight: 500;
+    margin-bottom: 0px;
+    word-wrap: break-word;
+    word-break:break-all;
+    overflow: hidden;
+  }
+  .version{
+    font-size: 11px;
+    color: #bbb;
+  }
+  .description{
+    color: rgba(0, 0, 0, .45);
+    font-size: 12px;
+    word-wrap: break-word;
+    word-break:break-all;
+    overflow: hidden;
+    margin-bottom: 0;
+    margin-bottom: 4px;
+  }
+  .extra{
+    font-size: 12px;
+    color: #555;
+  }
+  &:hover{
+    border-style: solid;
+    background-color: #e6f7ff;
+    border-color: #91d5ff;
+    .name{
+      color: #1890ff;
+    }
+  }
+}

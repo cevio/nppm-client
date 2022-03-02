@@ -1,0 +1,157 @@
+.markdown{
+  color: #40485b;
+  // background-color: #fff;
+  img{
+    max-width: 100%;
+  }
+  table{
+    border-left: 1px solid #eee;
+    border-top: 1px solid #eee;
+    max-width: 100%;
+    td,th{
+      border-right: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+      padding: 12px 16px;
+    }
+    th{
+      background-color: rgb(250,250,250);
+    }
+  }
+  h1, h2{
+    border-bottom: 1px solid #eee;
+  }
+  code{
+    background-color: #fff;
+    font-size: 12px;
+    border-radius: 2px;
+    padding: 0 4px;
+  }
+  pre {
+    code {
+      background-color: #e6f7ff;
+      font-size: 12px;
+      padding: 8px 16px;
+      border-radius: 4px;
+      border: 1px dashed #91d5ff;
+    }
+  }
+  blockquote{
+    padding: 0 1em;
+    color: #6a737d;
+    border-left: 0.25em solid #dfe2e5;
+  }
+  .keywords{
+    a{
+      margin-right: 8px;
+    }
+  }
+}
+@packageHeadLeftGap: 8px;
+@packageHeadRightGap: 24px;
+.head{
+  column-gap: @packageHeadRightGap;
+  .left{
+    column-gap: @packageHeadLeftGap;
+    .pathname{
+      font-size: 24px;
+      font-weight: 700;
+    }
+    .desc{
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      word-wrap: break-word;
+      word-break: break-all;
+      font-size: 12px;
+      font-weight: 300;
+      span.time{
+        color: #bbb;
+      }
+    }
+  }
+  .right{
+    height: 32px;
+    :global{
+      .ant-space-item{
+        height: 32px;
+      }
+    }
+  }
+}
+.description{
+  color: rgba(0,0,0,.45);
+  margin-bottom: 0!important;
+  border: 1px dashed #ddd;
+  padding:8px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+.buttons{
+  color: #bbb;
+  font-size: 12px;
+  .item{
+    // margin-left: 2px;
+    span{
+      margin-right: 3px;
+    }
+  }
+}
+
+.tags{
+  .tag{
+    cursor: pointer;
+  }
+}
+
+.version{
+  .alias{
+    color: #bbb;
+    font-size: 12px;
+  }
+}
+
+.like {
+  .likeText{
+    padding-left: 8px;
+  }
+  .likeCount{
+    display: inline-block;
+    min-width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: #ddd;
+    font-size: 10px;
+    box-sizing: border-box;
+    padding: 0 4px;
+    text-align: center;
+  }
+  .likeIcon{
+    color: #eac54f;
+  }
+}
+
+.maintainers {
+  .maintainer{
+    column-gap: 8px;
+    background-color: #fff;
+    border: 1px dashed #ddd;
+    border-radius: 4px;
+    padding: 12px 16px;
+    .email{
+      color: rgba(0,0,0,.45);
+      font-size: 12px;
+    }
+    &.clickable {
+      cursor: pointer;
+    }
+  }
+}
+
+.dep{
+  display: block;
+  background-color: #fff;
+  padding: 8px 12px;
+  border: 1px dashed #ddd;
+  border-radius: 4px;
+  width: 100%;
+  font-size: 12px;
+}
