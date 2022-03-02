@@ -18,9 +18,5 @@ export default [
   {
     label: 'Postgres',
     value: 'postgres'
-  },
-  {
-    label: 'SQLite',
-    value: 'sqlite'
   }
 ]
