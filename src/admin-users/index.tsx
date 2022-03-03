@@ -38,7 +38,6 @@ export default class AdminUsersPage {
         <Flex align="between" valign="middle">
           <Pagination showSizeChanger={false} current={page} pageSize={size} total={result ? result[1] : 0} onChange={onChange} />
           <Input.Search 
-            value={keyword} 
             onSearch={e => setKeyword(e)} 
             onChange={e => !e.target.value && setKeyword(undefined)} 
             placeholder="搜索关键账号或者昵称"

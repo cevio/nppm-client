@@ -15,7 +15,7 @@ export default class DownloadRankPage {
     const size = Number(useQuery('size', '15'));
     const { loading, result, error } = useAsync(getDownloads, [page, size]);
     const state = result || [[], 0];
-    const onPageChange = (a: number, b: number) => redirect(`/rank/stars?page=${a}&size=${b}`);
+    const onPageChange = (a: number, b: number) => redirect(`/rank/downloads?page=${a}&size=${b}`);
     useEffect(() => error && message.error(error.message), [error]);
     return <Spin spinning={loading} style={{ minHeight: 200 }}>
       <Row gutter={[24, 24]}>
