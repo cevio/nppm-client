@@ -8,7 +8,8 @@ export interface TConfigs {
   login_code: string,
   registries: string[],
   dictionary: string,
-  registerable: boolean
+  registerable: boolean,
+  installable: boolean,
 }
 
 export interface TPlugin {

@@ -46,6 +46,7 @@ export default class AdminBaseSettingPage {
     const [loginCode, setLoginCode] = useState('default');
     const [dictionary, setDictionary] = useState('packages');
     const [registerAble, setRegisterAble] = useState(false);
+    const [installable, setInstallable] = useState(true);
 
     const getter = useAsync(getConfigsState, []);
     const setter = useAsyncCallback(setConfigsState);
@@ -85,7 +86,7 @@ export default class AdminBaseSettingPage {
     }
 
     const submit = () => {
-      setter.execute({ domain, scopes, registries, login_code: loginCode, dictionary, registerable: registerAble })
+      setter.execute({ domain, scopes, registries, login_code: loginCode, dictionary, registerable: registerAble, installable })
         .then(() => message.success('保存配置成功'))
         .catch(e => message.error(e.message));
     }
@@ -98,6 +99,7 @@ export default class AdminBaseSettingPage {
         setLoginCode(getter.result.login_code);
         setDictionary(getter.result.dictionary);
         setRegisterAble(getter.result.registerable);
+        setInstallable(!!getter.result.installable);
       }
     }, [getter.result]);
 
@@ -105,8 +107,11 @@ export default class AdminBaseSettingPage {
       <Config title="网站地址" description="此选项关系到模块包tgz文件的下载，所以为必填项。你必须设置为本服务可访问域名。">
         <Input value={domain} onChange={e => setDomain(e.target.value)} style={{ width: 500 }} placeholder="请输入网站域名地址 HTTP 或 HTTPS 开头" />
       </Config>
-      <Config title="注册" description="开关，关系到新注册用户是否可以注册。如果已注册用户，则不影响登录。">
-        <Checkbox checked={registerAble} onChange={e => setRegisterAble(e.target.checked)}>开放整站注册</Checkbox>
+      <Config title="注册" description="开关，关系到新注册用户是否可以注册NPM默认模式，即NPM的账号密码，第三方登录不受影响。如果已注册用户，则不影响登录。">
+        <Checkbox checked={registerAble} onChange={e => setRegisterAble(e.target.checked)}>开放NPM默认注册模式</Checkbox>
+      </Config>
+      <Config title="安装模块" description="开关，关系到是否在未登录情况下能够安装模块。此功能结合注册选项用于将本程序搭建在外网的情况下保障模块不被窃取。">
+        <Checkbox checked={installable} onChange={e => setInstallable(e.target.checked)}>允许开放安装模块</Checkbox>
       </Config>
       <Config title="网站允许使用的命名空间" description="可使用的scope前缀。比如@node，那么这个scope前缀的模块将可以被接受。如果管理员设定用户自身的scope前缀，将会与此项组合后判断是否接受。">
         <TagTreeInput 
