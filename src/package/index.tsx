@@ -139,7 +139,7 @@ export default class PackagePage {
             return <Col span={6} key={maintainer.name}>
               <Flex blocked className={classnames(styles.maintainer, {
                 [styles.clickable]: !maintainer.public,
-              })} onClick={() => !maintainer.public && redirect('/user/' + maintainer.name)}>
+              })} onClick={() => !maintainer.public && redirect('/user/' + maintainer.account)}>
                 <Avatar src={maintainer.avatar} size={38} />
                 <Flex span={1} scroll="hide" direction="column">
                   <Typography.Text ellipsis>{maintainer.name}</Typography.Text>

@@ -46,6 +46,7 @@ export interface TPackageMaintainerState {
   email: string,
   avatar?: string,
   public?: boolean,
+  account: string,
 }
 
 export async function getPackage(pkg: string) {
