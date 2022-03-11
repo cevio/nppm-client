@@ -35,6 +35,16 @@ export default class AdminBaseSettingPage {
     suffix: <EnterOutlined />
   }
 
+  private readonly ipsButtonProps: ButtonProps = {
+    type: 'link',
+    icon: <PlusOutlined />
+  };
+
+  private readonly ipsInputProps: InputProps = {
+    placeholder: '请输入IP地址，如 127.0.0.1',
+    suffix: <EnterOutlined />
+  }
+
   public render() {
     const Config = useComponentWithMethod(this.config, this);
     const TagTreeInput = useComponent(this.TagTreeInput);
@@ -47,6 +57,7 @@ export default class AdminBaseSettingPage {
     const [dictionary, setDictionary] = useState('packages');
     const [registerAble, setRegisterAble] = useState(false);
     const [installable, setInstallable] = useState(true);
+    const [ips, setIps] = useState<string[]>([]);
 
     const getter = useAsync(getConfigsState, []);
     const setter = useAsyncCallback(setConfigsState);
@@ -85,8 +96,25 @@ export default class AdminBaseSettingPage {
       }
     }
 
+    const addIp = (value: string) => {
+      const _ips = ips.slice(0);
+      if (!_ips.includes(value)) {
+        _ips.push(value);
+        setIps(_ips);
+      }
+    }
+
+    const removeIP = (value: string) => {
+      const _ips = ips.slice(0);
+      const index = _ips.indexOf(value);
+      if (index > -1) {
+        _ips.splice(index, 1);
+        setIps(_ips);
+      }
+    }
+
     const submit = () => {
-      setter.execute({ domain, scopes, registries, login_code: loginCode, dictionary, registerable: registerAble, installable })
+      setter.execute({ domain, scopes, registries, login_code: loginCode, dictionary, registerable: registerAble, installable, ips })
         .then(() => message.success('保存配置成功'))
         .catch(e => message.error(e.message));
     }
@@ -100,6 +128,7 @@ export default class AdminBaseSettingPage {
         setDictionary(getter.result.dictionary);
         setRegisterAble(getter.result.registerable);
         setInstallable(!!getter.result.installable);
+        setIps(getter.result.ips || [])
       }
     }, [getter.result]);
 
@@ -113,6 +142,20 @@ export default class AdminBaseSettingPage {
       <Config title="安装模块" description="开关，关系到是否在未登录情况下能够安装模块。此功能结合注册选项用于将本程序搭建在外网的情况下保障模块不被窃取。">
         <Checkbox checked={installable} onChange={e => setInstallable(e.target.checked)}>允许开放安装模块</Checkbox>
       </Config>
+      {
+        !installable && <Config title="IP白名单" description="在禁止非登录情况下下载模块，可以指定IP白名单绕过检测机制，常用于服务器端的在线编译等特殊场景。">
+          <TagTreeInput 
+            buttonText = "添加IP白名单"
+            button={this.ipsButtonProps} 
+            input={this.ipsInputProps}
+            dataSource={ips} 
+            onAddone={addIp} 
+            onRemoveone={removeIP} 
+            emptyText="暂无IP白名单"
+            loading={getter.loading}
+          />
+        </Config>
+      }
       <Config title="网站允许使用的命名空间" description="可使用的scope前缀。比如@node，那么这个scope前缀的模块将可以被接受。如果管理员设定用户自身的scope前缀，将会与此项组合后判断是否接受。">
         <TagTreeInput 
           buttonText = "添加命名空间"

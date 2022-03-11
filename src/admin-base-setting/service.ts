@@ -10,6 +10,7 @@ export interface TConfigs {
   dictionary: string,
   registerable: boolean,
   installable: boolean,
+  ips: string[],
 }
 
 export interface TPlugin {
