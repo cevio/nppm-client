@@ -291,7 +291,6 @@ export class Layout {
     const matched = version === globals.version;
     const color = matched ? 'success' : 'warning';
     useEffect(() => error && message.error(error.message), [error]);
-    console.log(result);
     return <Breadcrumb separator={<Divider type="vertical" />}>
       <Breadcrumb.Item>
         <Typography.Link href="https://cevio.github.io/nppm/" target="_blank"><FileMarkdownOutlined /> 文档</Typography.Link>
