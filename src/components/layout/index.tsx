@@ -8,6 +8,7 @@ import { TUser, UserContext, GlobalContext } from '../../lib';
 import { useAsync, useAsyncCallback } from 'react-async-hook';
 import { weblogin, webLogout, getLoginModules } from './service';
 import { NavgatorBreadCrumb } from '../breadcrumb';
+import { getPackage } from '../../package/service';
 import { 
   Space, 
   Breadcrumb, 
@@ -48,6 +49,7 @@ import {
   BugOutlined,
   InboxOutlined,
   CloudDownloadOutlined,
+  NotificationFilled,
 } from '@ant-design/icons';
 
 interface TNavBase {
@@ -281,6 +283,15 @@ export class Layout {
 
   private banner_navs() {
     const globals = useContext(GlobalContext);
+    const { result, error } = useAsync(getPackage, ['@nppm/npm']);
+    const version = useMemo(() => {
+      if (!result) return globals.version;
+      return result['dist-tags'].latest || globals.version;
+    }, [result]);
+    const matched = version === globals.version;
+    const color = matched ? 'success' : 'warning';
+    useEffect(() => error && message.error(error.message), [error]);
+    console.log(result);
     return <Breadcrumb separator={<Divider type="vertical" />}>
       <Breadcrumb.Item>
         <Typography.Link href="https://cevio.github.io/nppm/" target="_blank"><FileMarkdownOutlined /> 文档</Typography.Link>
@@ -292,7 +303,12 @@ export class Layout {
         <Typography.Link href="https://github.com/cevio/nppm" target="_blank"><GithubOutlined /> GitHub</Typography.Link>
       </Breadcrumb.Item>
       <Breadcrumb.Item>
-        <Tag style={{ cursor: 'pointer' }} color="success" onClick={() => redirect('/package/@nppm/npm?tab=versions')}>v{globals.version}</Tag>
+        <Tooltip title={matched ? null : '可以升级到最新版本v' + version}>
+          <Tag style={{ cursor: 'pointer' }} color={color} onClick={() => redirect('/package/@nppm/npm?tab=versions')}>
+            <span className="number">v{globals.version}</span>
+            {!matched && <NotificationFilled style={{ fontSize: 12 }} />}
+          </Tag>
+        </Tooltip>
       </Breadcrumb.Item>
     </Breadcrumb>
   }
